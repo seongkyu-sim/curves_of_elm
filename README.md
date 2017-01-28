@@ -99,7 +99,7 @@ todo: fill it
 
 ###record 생성방법
 
-```
+```Elm
 type alias Animal = 
 	{ species : String
 	, age : Int
