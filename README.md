@@ -8,21 +8,24 @@ _전체내용을 다루지 않음, 공식문서중 이해하기 어렵거나 혼
 
 ---
 
-### 공식문서
+공식문서
+===
 1. [튜토리얼](https://www.elm-tutorial.org/en/) 
 2. [가이드](https://guide.elm-lang.org)
 
 _Functional Programming에대한 사전 지식이 부족하면 [튜토리얼](https://www.elm-tutorial.org/en/) 을 먼저 읽기 권함_
 
 
-### 참고자료
+참고자료
+===
 
 1. [Why You Should Give Elm a Try](http://devnacho.com/2016/04/12/why-you-should-give-elm-a-try/) : 왜 Elm을 써야하는가에대한 간략한 설명과 3개의 유투브 영상이 링크되어 있음
 2. [케빈TV](https://www.youtube.com/playlist?list=PLRIMoAKN8c6NRxXgxZVo1Jyxgg4TVIKeI) : '나는 프로그래머다' 엠씨로 활동중이신 개발자분, 중간중간 잡담이 많치만 같이 공부하는 기분이 들게함 :) `강추!`
 
 ---
 
-### todos
+todos
+===
 
 - [x] 개념잡기
 - [ ] [튜토리얼](https://www.elm-tutorial.org/en/) 
@@ -31,7 +34,9 @@ _Functional Programming에대한 사전 지식이 부족하면 [튜토리얼](ht
 
 ---
 
-### 구조
+구조
+===
+
 언어자체에 웹앱을 만들수 있는 프레임웍이 내장되어 있음
 model, view, update가 작동하는 방식이 프레임웍에 의존해서 처리됨
 <!--
@@ -43,7 +48,8 @@ https://www.elm-tutorial.org/en/02-elm-arch/04-flow.png 설명 쓰기
 todo: fill it
 -->
 
-### functions
+functions
+===
 
 >오브젝이나 값만을 주고 받는게 아니라 함수(처리 알고리즘)을 주고-받음(`λ : 람다`)으로서 구조를 간결하고 유연하게 만든다
 
@@ -87,7 +93,8 @@ todo: fill it
 
 
 
-### record 생성방법
+record 생성방법
+===
 
 ```Elm
 type alias Animal = 
@@ -101,9 +108,11 @@ m3 = Animal "cat" 3 -- 새로운 record를 간소화한 문법으로 생성한�
 
 
 
-### Union Types 
+Union Types 
+===
 
-#### Algebraic data type
+Algebraic data type
+---
 
 [DOC](https://guide.elm-lang.org/types/union_types.html)
 
@@ -140,9 +149,10 @@ photos =
 [Swift와 비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#enum--associated-dataalgebraic-data-type)
 
 
-#### Generic Data Structures
+Generic Data Structures
+---
 
-데이터의 형태를 정하지 않고 처리하기위한 패턴
+> 데이터의 형태를 정하지 않고 처리하기위한 패턴
 
 ```elm
 > type List a = Empty | Node a (List a)
@@ -175,6 +185,5 @@ photos =
 -- 3 : number
 ```
 
-> `_`(underscore) 해당 값을 사용하지않음(무시)
-
-> List `a`: a를 써도 되고 어떤 String값이든 쓸수 있음 단 컨벤션은 lowercase로 시작.
+- `_`(underscore) 해당 값을 사용하지않음(무시)
+- List `a`: a를 써도 되고 어떤 String값이든 쓸수 있음 단 컨벤션은 lowercase로 시작.
