@@ -21,7 +21,8 @@ func userPhoto(user: User) -> String {
 
 let activeUsers = [User.anonymous, User.named("catface420"),  User.named("AzureDiamond"), User.anonymous]
 
-let photos = activeUsers.map{ userPhoto(user: $0) } // ["anon.png", "userscatface420.png", "usersAzureDiamond.png", "anon.png"]
+let photos = activeUsers.map{ userPhoto(user: $0) } 
+// ["anon.png", "userscatface420.png", "usersAzureDiamond.png", "anon.png"]
 
 
 ```

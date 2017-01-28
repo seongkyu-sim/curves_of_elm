@@ -112,6 +112,8 @@ m3 = Animal "cat" 3 -- 새로운 record를 간소화한 문법으로 생성한�
 
 ###Union Types>Algebraic data type
 
+[DOC](https://guide.elm-lang.org/types/union_types.html)
+
 
 ```Elm
 
@@ -138,4 +140,4 @@ photos =
 
 ```
 
-
+[Swift와 비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md)
