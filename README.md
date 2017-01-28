@@ -25,6 +25,18 @@ _Functional Programming에대한 사전 지식이 부족하면 [튜토리얼](ht
 ---
 
 
+###todos
+
+- [x] 개념잡기
+- [ ] [튜토리얼](https://www.elm-tutorial.org/en/) 
+- [ ] [가이드](https://guide.elm-lang.org)
+- [ ] Elm + Firebase 테스트
+
+
+
+---
+
+
 ###구조
 언어자체에 웹앱을 만들수 있는 프레임웍이 내장되어 있음
 model, view, update가 작동하는 방식이 프레임웍에 의존해서 처리됨
