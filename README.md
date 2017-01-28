@@ -197,6 +197,18 @@ photos =
 -- Empty : Repl.List a
 > reverse ns
 -- Node 3 (Node 2 (Node 1 Empty)) : Repl.List number
+
+
+> member a list = \
+|   case list of \
+|     Empty -> False \
+|     Node x next -> if a == x then True else member a next 
+-- <function> : a -> Repl.List a -> Bool
+
+> member 2 ns
+-- True : Bool
+> member 4 ns
+-- False : Bool
 ```
 
 - `_`(underscore) 해당 값을 사용하지않음(무시)
