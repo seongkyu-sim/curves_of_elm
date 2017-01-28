@@ -151,10 +151,12 @@ photos =
 
 ```elm
 > type List a = Empty | Node a (List a)
+
 > ns = Node 1 (Node 2 (Node 3 Empty))
 -- Node 1 (Node 2 (Node 3 Empty)) : Repl.List number
 > nil = Empty
 -- Empty : Repl.List a
+
 
 > isEmpty list = \
 |   case list of\
@@ -167,6 +169,7 @@ photos =
 > isEmpty nil
 -- True : Bool
 
+
 > length list = \
 |   case list of \
 |     Empty -> 0 \
@@ -178,6 +181,22 @@ photos =
 
 > length ns
 -- 3 : number
+
+
+> reverse list = \
+|   let \
+|     reverseP xs acc = \
+|       case xs of \
+|         Empty -> acc \
+|         Node a next -> reverseP next (Node a acc) \
+|   in \
+|     reverseP list Empty
+-- <function> : Repl.List a -> Repl.List a
+
+> reverse nil
+-- Empty : Repl.List a
+> reverse ns
+-- Node 3 (Node 2 (Node 1 Empty)) : Repl.List number
 ```
 
 - `_`(underscore) 해당 값을 사용하지않음(무시)
