@@ -255,7 +255,17 @@ sue =
 tom : User
 tom =
   { name = "Tom", age = Just 24 }
+
+
+canBuyAlcohol : User -> Bool
+canBuyAlcohol user =
+  case user.age of -- 옵셔널로 설정된 값을 사용하려면 case문으로 풀어서 사용해야한다.
+    Nothing ->
+      False
+
+    Just age ->
+      age >= 21  
 ```
 
-- [Swift비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#optional): optional 사용은 Swift가 편하다고 느껴짐
+- [Swift비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#optional): optional 사용은 Swift가 편하다고 느껴짐, 하지만 sue.age! 처럼 강제로 무시가능(nil이 없는 것이 아님)
 
