@@ -213,3 +213,49 @@ photos =
 
 - `_`(underscore) 해당 값을 사용하지않음(무시)
 - List `a`: a를 써도 되고 어떤 String값이든 쓸수 있음 단 컨벤션은 lowercase로 시작.
+- type 생성시 위 예제에서 List가 타입의 역할을 하고 오른쪽의 (Empty, Node a)부분이 데이터 역할을 하게됨.
+
+
+Error Handling
+---
+
+- Maybe: 타언어(Java, Javascript, Ruby, Python)에 있는 null에 해당하는 상황을 처리하기위해 만들어짐. Swift의 `optional`과 비슷한 개념
+- Result: exeption을 처리하기 위해 만들어짐.
+- Task: Result와 비슷하나 `asynchronos`상황에 특화되어 만들어짐.
+
+### Maybe
+```Elm
+> type Maybe a = Nothing | Just a
+
+> Nothing
+Nothing : Repl.Maybe a
+> Just
+<function> : a -> Repl.Maybe a
+> Just 3
+Just 3 : Repl.Maybe number
+> Just "frank"
+Just "frank" : Repl.Maybe String -- 아마 스트링이 있을걸
+```
+
+
+### Optional Fields
+
+옵셔널이 필요한이유: 유저에게 정보입력 요구를 분할하라. ex)처음가입할때 이메일만 요구하고 사용하면서 이름, 성별등의 정보를 분할 요청하라 --> UX관점에서도 중요한 포인트
+
+```Elm
+type alias User =
+  { name : String
+  , age : Maybe Int
+  }  
+
+sue : User
+sue =
+  { name = "Sue", age = Nothing }  
+
+tom : User
+tom =
+  { name = "Tom", age = Just 24 }
+```
+
+- Swift비교: optional 사용은 Swift가 편하다고 느껴짐
+
