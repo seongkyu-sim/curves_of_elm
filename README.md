@@ -95,7 +95,7 @@ todo: fill it
 - 실제와 좀 다르지만 이해하기 쉬운 설명 : __마지막 -> Float__ 부분이 리턴.
 - 좀더 어려운 설명 : 'divide : Float -> Float -> Float'은 실제로는 두개의 함수로 이루어져 있으며 __맨뒤의 함수부터 앞쪽의 함수에 함수 자체를 반환__ 시켜서 연산을 함.
 
-
+<br />
 
 ###record 생성방법
 
@@ -110,10 +110,12 @@ m3 = Animal "cat" 3 -- 새로운 record를 간소화한 문법으로 생성한�
 ```
 
 
-###Union Types>Algebraic data type
+
+###Union Types > Algebraic data type
 
 [DOC](https://guide.elm-lang.org/types/union_types.html)
 
+OOP개념의 `enum`과 유사한 개념, 단순히 타입뿐아니라 각 타입함수가 값을 받을 수 있다.
 
 ```Elm
 
