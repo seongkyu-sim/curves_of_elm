@@ -257,5 +257,5 @@ tom =
   { name = "Tom", age = Just 24 }
 ```
 
-- Swift비교: optional 사용은 Swift가 편하다고 느껴짐
+- [Swift비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#optional): optional 사용은 Swift가 편하다고 느껴짐
 
