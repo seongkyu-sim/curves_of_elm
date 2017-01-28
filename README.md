@@ -18,7 +18,7 @@ _Functional Programming에대한 사전 지식이 부족하면 [튜토리얼](ht
 ### 참고자료
 
 1. [Why You Should Give Elm a Try](http://devnacho.com/2016/04/12/why-you-should-give-elm-a-try/) : 왜 Elm을 써야하는가에대한 간략한 설명과 3개의 유투브 영상이 링크되어 있음
-2. [케빈TV](https://www.youtube.com/playlist?list=PLRIMoAKN8c6NRxXgxZVo1Jyxgg4TVIKeI) : '나는 프로그래머다' 엠씨로 활동중이신 개발자분, 중간중간 잡담이 많치만 같이 공부하는 기분이 들게함 :) __강추!__
+2. [케빈TV](https://www.youtube.com/playlist?list=PLRIMoAKN8c6NRxXgxZVo1Jyxgg4TVIKeI) : '나는 프로그래머다' 엠씨로 활동중이신 개발자분, 중간중간 잡담이 많치만 같이 공부하는 기분이 들게함 :) `강추!`
 
 ---
 
@@ -101,7 +101,9 @@ m3 = Animal "cat" 3 -- 새로운 record를 간소화한 문법으로 생성한�
 
 
 
-### Union Types > Algebraic data type
+### Union Types 
+
+#### Algebraic data type
 
 [DOC](https://guide.elm-lang.org/types/union_types.html)
 
@@ -138,6 +140,41 @@ photos =
 [Swift와 비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#enum--associated-dataalgebraic-data-type)
 
 
+#### Generic Data Structures
 
+데이터의 형태를 정하지 않고 처리하기위한 패턴
 
+```elm
+> type List a = Empty | Node a (List a)
+> ns = Node 1 (Node 2 (Node 3 Empty))
+-- Node 1 (Node 2 (Node 3 Empty)) : Repl.List number
+> nil = Empty
+-- Empty : Repl.List a
 
+> isEmpty list = \
+|   case list of\
+|     Empty -> True\
+|     Node _ _ -> False
+-- <function> : Repl.List a -> Bool
+
+> isEmpty ns
+-- False : Bool
+> isEmpty nil
+-- True : Bool
+
+> length list = \
+|   case list of \
+|     Empty -> 0 \
+|     Node _ next -> 1 + length next
+<function> : Repl.List a -> number
+
+> length nil
+-- 0 : number
+
+> length ns
+-- 3 : number
+```
+
+> `_`(underscore) 해당 값을 사용하지않음(무시)
+
+> List `a`: a를 써도 되고 어떤 String값이든 쓸수 있음 단 컨벤션은 lowercase로 시작.
