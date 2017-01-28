@@ -108,3 +108,34 @@ m = { species = "dog", age = 4 } -- 새로운 record를 생성한다
 m2 = { m | age = 2 } -- m record를 카피해서 age 값만 변경한다
 m3 = Animal "cat" 3 -- 새로운 record를 간소화한 문법으로 생성한다
 ```
+
+
+###Union Types>Algebraic data type
+
+
+```Elm
+
+type User = Anonymous | Named String
+
+userPhoto : User -> String
+userPhoto user =
+  case user of
+    Anonymous ->
+      "anon.png"
+
+    Named name ->
+      "users/" ++ name ++ ".png"
+      
+activeUsers : List User
+activeUsers =
+  [ Anonymous, Named "catface420", Named "AzureDiamond", Anonymous ]
+
+photos : List String
+photos =
+  List.map userPhoto activeUsers
+
+-- [ "anon.png", "users/catface420.png", "users/AzureDiamond.png", "anon.png" ]
+
+```
+
+
