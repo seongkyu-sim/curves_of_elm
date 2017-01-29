@@ -38,13 +38,13 @@ todos
 2. 터미널에서 프로젝트 폴더로 이동후 `elm package install elm-lang/html`
 3. 프로젝트 루트패스에 `Hello.eml`파일 생성
 4. 파일에 "Hello"메세지를 위한 코드 작성
-    ```elm
+```elm
     module Hello exposing (..) -- (..) == all
     import Html exposing (..) -- Html 렌더링용
 
     main = 
         text "Hello"
-    ```
+```
 5. 터미널에서 `elm-reactor` 실행
 
 구조
