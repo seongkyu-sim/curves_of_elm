@@ -2,6 +2,7 @@
 Elm `ver0.18`
 ---
 
+
 ##### [elm](http://elm-lang.org) 학습 기록
 
 _전체내용을 다루지 않음, 공식문서중 이해하기 어렵거나 혼동하기 쉬운 부분만 먼저 기록합니다._
@@ -30,6 +31,21 @@ todos
 - [ ] [가이드](https://guide.elm-lang.org)
 - [ ] Elm + Firebase 테스트
 
+
+연습용 프로젝트 생성
+---
+1. 프로젝트 폴더 생성
+2. 터미널에서 프로젝트 폴더로 이동후 `elm package install elm-lang/html`
+3. 프로젝트 루트패스에 `Hello.eml`파일 생성
+4. 파일에 "Hello"메세지를 위한 코드 작성
+    ```elm
+    module Hello exposing (..) -- (..) == all
+    import Html exposing (..) -- Html 렌더링용
+
+    main = 
+        text "Hello"
+    ```
+5. 터미널에서 `elm-reactor` 실행
 
 구조
 ---
@@ -267,5 +283,265 @@ canBuyAlcohol user =
       age >= 21  
 ```
 
-- [Swift비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#optional): optional 사용은 Swift가 편하다고 느껴짐, 하지만 sue.age! 처럼 강제로 무시가능(nil이 없는 것이 아님)
+- [Swift비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#optional): optional 사용은 Swift가 편하다고 느껴짐, 하지만 `sue.age!` 처럼 강제로 무시가능(`nil`이 없는 것이 아님)
+
+
+
+###Result
+> 결과가 성공일수도 있고 실패일수도 있는 상황에서 사용됨, Error가 데이터라는것이 타언어와 다른특징.
+```Elm
+> String.toInt
+<function> : String -> Result.Result String Int
+
+type Result error value
+  = Err error
+  | Ok value
+
+
+> import String
+
+> String.toInt "128"
+Ok 128 : Result String Int
+
+> String.toInt "64"
+Ok 64 : Result String Int
+
+> String.toInt "BBBB"
+Err "could not convert string 'BBBB' to an Int" : Result String Int
+
+
+view : String -> Html msg
+view userInputAge =
+  case String.toInt userInputAge of
+    Err msg ->
+      span [class "error"] [text msg]
+
+    Ok age ->
+      if age < 0 then
+        span [class "error"] [text "I bet you are older than that!"]
+
+      else if age > 140 then
+        span [class "error"] [text "Seems unlikely..."]
+
+      else
+        text "OK!"
+
+
+```
+
+
+Interop
+---
+
+### Json
+
+```Elm 
+
+string : Decoder String -- string을 담고 있는 UnionType
+int : Decoder Int
+float : Decoder Float
+bool : Decoder Bool
+
+-- Json data를 Decoder 타입에 따라 변환해줌
+decodeString : Decoder a -> String -> Result String a
+```
+
+```Elm
+> import Json.Decode exposing (..)
+
+> decodeString int "42"
+Ok 42 : Result String Int
+
+> decodeString float "3.14159"
+Ok 3.14159 : Result String Float
+
+> decodeString bool "true"
+Ok True : Result String Bool
+
+> decodeString int "true" -- int 포멧으로 변환하려는데 Bool에 해당하는 스트링을 입력하니 컴파일 에러남.
+Err "Expecting an Int but instead got: true" : Result String Int
+
+```
+
+
+### Combining Decoders
+
+```Elm 
+> import Json.Decode exposing (..)
+
+> int -- 인트 디코더
+<decoder> : Json.Decode.Decoder Int
+> list -- 리스트 디코더
+<function> : Json.Decode.Decoder a -> Json.Decode.Decoder (List a)
+> list int - 인트를 가지고있는 리스트 디코더
+<decoder> : Json.Decode.Decoder (List Int)
+
+> decodeString (list int) "[1, 2, 3]"
+Ok [1,2,3] : Result.Result String (List Int)
+
+-- triple quote 사용 가능
+> decodeString (list string) """["hi", "yo"]"""
+Ok ["hi","yo"] : Result.Result String (List String)
+
+-- 리스트안에 리스트안까지 쉽게
+> decodeString (list (list int)) "[ [0], [1,2,3], [4,5] ]"
+Ok [[0],[1,2,3],[4,5]] : Result String (List (List Int))
+```
+
+
+### Decoding Object
+
+#### [field](http://package.elm-lang.org/packages/elm-lang/core/latest/Json-Decode#field)
+
+> 커스텀 decoder를 생성할 때 사용한다.
+
+field "x" int
+- `x`: 필드명
+- `int`: int로 변환 가능한 데이터
+
+```Elm 
+> field
+<function> : String -> Json.Decode.Decoder a -> Json.Decode.Decoder a
+```
+
+Decode_json.elm
+```Elm 
+module Decode_json exposing (..)
+
+import Json.Decode exposing (..)
+
+nameExtractor : Decoder String
+nameExtractor = field "name" string
+
+me = """
+    { "id": 1
+    , "name": "Frank"
+    }
+"""
+```
+
+```Elm 
+> import Decode_json exposing (..)
+> import Json.Decode exposing (..)
+
+> decodeString
+<function> : Json.Decode.Decoder a -> String -> Result.Result String a
+
+> decodeString nameExtractor me
+Ok "Frank" : Result.Result String String
+```
+
+### Combine Decoder
+> [map2](http://package.elm-lang.org/packages/elm-lang/core/latest/Json-Decode#map2)
+함수를 이용해서 두개의 디코더를 합성보자
+
+```Elm 
+> import Decode_json exposing (..)
+
+> type alias Person = { id : Int, name : String }
+<function> : Int -> String -> Repl.Person
+
+> personDecoder = map2 Person (field "id" int) (field "name" string)
+<decoder> : Json.Decode.Decoder Repl.Person
+
+> map2
+<function>
+    : (a -> b -> value)
+      -> Json.Decode.Decoder a
+      -> Json.Decode.Decoder b
+      -> Json.Decode.Decoder value
+
+> decodeString personDecoder me
+Ok { id = 1, name = "Frank" } : Result.Result String Decode_json.Person
+```
+
+### Combine Decoder with Pipeline
+> 2개가 아닌 더 많은 갯수의 디코더를 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)로 합성해 보자
+
+먼저 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)를 설치해줘야 한다.
+1. elm-package.json > `dependencies`에 `"NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0"` 추가
+2. `elm-stuff` 폴더 삭제
+2. terminal에서 `elm-make`
+
+```Elm 
+import Json.Decode exposing (..)
+import Json.Decode.Pipeline exposing (decode, required)
+
+type alias Point = { x : Int, y : Int }
+
+pointDecoder : Decoder Point
+pointDecoder =
+  decode Point
+    |> required "x" int
+    |> required "y" int
+
+
+pointJsonString = """
+    { "x": 23
+    , "y": 78
+    }
+"""
+
+> decodeString pointDecoder pointJsonString
+Ok { x = 23, y = 78 } : Result.Result String Decode_json.Point
+```
+
+### Auto generate code for decode/incode
+> *더 쉽게 해보자!* [json_to_elm](https://github.com/eeue56/json-to-elm)에서 제공하는 웹페이지에서 Json 스트링을 넣어주면 자동으로 incode/decode를 할 수 있는 elm code를 생성해 준다
+1. http://noredink.github.io/json-to-elm/ 에서 코드를 생성후 프로젝트에 붙여 넣는다
+2. 생성된 코드에서 json-extra를 사용한다고 경고가 나온다
+3. elm-package.json > elm-community/json-extra": "2.1.0 <= v < 3.0.0" 추가 
+
+```Elm 
+module JsonToElm exposing (..)
+
+import Json.Encode
+import Json.Decode
+-- elm-package install -- yes noredink/elm-decode-pipeline
+import Json.Decode.Pipeline
+
+type alias User =
+    { id : Int
+    , email : String
+    , name : String
+    }
+
+decodeUser : Json.Decode.Decoder User
+decodeUser =
+    Json.Decode.Pipeline.decode User
+        |> Json.Decode.Pipeline.required "id" (Json.Decode.int)
+        |> Json.Decode.Pipeline.required "email" (Json.Decode.string)
+        |> Json.Decode.Pipeline.required "name" (Json.Decode.string)
+
+encodeUser : User -> Json.Encode.Value
+encodeUser record =
+    Json.Encode.object
+        [ ("id",  Json.Encode.int <| record.id)
+        , ("email",  Json.Encode.string <| record.email)
+        , ("name",  Json.Encode.string <| record.name)
+        ]
+
+--------------
+
+frank = """
+    { "id": 1
+    , "email": "1@colavo.kr"
+    , "name": "Frank"
+    }
+"""
+```
+- *위코드는 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)를 사용하는 코드임*
+
+```Elm
+> import JsonToElm exposing (..)
+> frank
+"\n    { \"id\": 1\n    , \"email\": \"1@colavo.kr\"\n    , \"name\": \"Frank\"\n    }\n"
+    : String
+> decodeString
+<function> : Json.Decode.Decoder a -> String -> Result.Result String a
+> decodeString decodeUser frank
+Ok { id = 1, email = "1@colavo.kr", name = "Frank" }
+    : Result.Result String JsonToElm.User
+```
+
 
