@@ -7,8 +7,7 @@
 ---
 1. [튜토리얼](https://www.elm-tutorial.org/en/) 
 2. [가이드](https://guide.elm-lang.org)
-
-_Functional Programming에대한 사전 지식이 부족하면 [튜토리얼](https://www.elm-tutorial.org/en/) 을 먼저 읽기 권함_
+> Functional Programming에대한 사전 지식이 부족하면 [튜토리얼](https://www.elm-tutorial.org/en/) 을 먼저 읽기 권함
 
 
 참고자료
@@ -58,9 +57,7 @@ todo: fill it
 
 functions
 ---
-
->오브젝트나 값만을 주고 받는게 아니라 함수(처리 알고리즘)을 주고-받음(`λ : 람다`)으로서 구조를 간결하고 유연하게 만든다
-
+오브젝트나 값만을 주고 받는게 아니라 함수(처리 알고리즘)을 주고-받음(`λ : 람다`)으로서 구조를 간결하고 유연하게 만든다
 
 ```Elm
 -- ver. Anonymous functions
@@ -157,8 +154,7 @@ photos =
 
 
 ### Generic Data Structures
-
-> 데이터의 형태를 정하지 않고 처리하기위한 패턴
+데이터의 형태를 정하지 않고 처리하기위한 패턴
 
 ```elm
 > type List a = Empty | Node a (List a)
@@ -235,6 +231,7 @@ Error Handling
 - Task: Result와 비슷하나 `asynchronos`상황에 특화되어 만들어짐.
 
 ### Maybe
+옵셔널이 필요한이유: 유저에게 정보입력 요구를 분할하라. ex)처음가입할때 이메일만 요구하고 사용하면서 이름, 성별등의 정보를 분할 요청하라 --> UX관점에서도 중요한 포인트
 ```Elm
 > type Maybe a = Nothing | Just a
 
@@ -250,8 +247,7 @@ Just "frank" : Repl.Maybe String -- 아마 스트링이 있을걸
 
 
 ### Optional Fields
-
-옵셔널이 필요한이유: 유저에게 정보입력 요구를 분할하라. ex)처음가입할때 이메일만 요구하고 사용하면서 이름, 성별등의 정보를 분할 요청하라 --> UX관점에서도 중요한 포인트
+Record 생성시 Maybe 사용
 
 ```Elm
 type alias User =
@@ -281,9 +277,9 @@ canBuyAlcohol user =
 - [Swift비교](https://github.com/seongkyu-sim/curves_of_elm/blob/master/compareWithSwift.md#optional): optional 사용은 Swift가 편하다고 느껴짐, 하지만 `sue.age!` 처럼 강제로 무시가능(`nil`이 없는 것이 아님)
 
 
-
 ###Result
-> 결과가 성공일수도 있고 실패일수도 있는 상황에서 사용됨, Error가 데이터라는것이 타언어와 다른특징.
+결과가 성공일수도 있고 실패일수도 있는 상황에서 사용됨, Error가 데이터라는것이 타언어와 다른특징.
+
 ```Elm
 > String.toInt
 <function> : String -> Result.Result String Int
@@ -387,8 +383,7 @@ Ok [[0],[1,2,3],[4,5]] : Result String (List (List Int))
 ### Decoding Object
 
 #### [field](http://package.elm-lang.org/packages/elm-lang/core/latest/Json-Decode#field)
-
-> 커스텀 decoder를 생성할 때 사용한다.
+커스텀 decoder를 생성할 때 사용한다.
 
 field "x" int
 - `x`: 필드명
@@ -451,7 +446,7 @@ Ok { id = 1, name = "Frank" } : Result.Result String Decode_json.Person
 ```
 
 ### Combine Decoder with Pipeline
-> 2개가 아닌 더 많은 갯수의 디코더를 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)로 합성해 보자
+2개가 아닌 더 많은 갯수의 디코더를 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)로 합성해 보자
 
 먼저 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)를 설치해줘야 한다.
 1. elm-package.json > `dependencies`에 `"NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0"` 추가
@@ -482,7 +477,7 @@ Ok { x = 23, y = 78 } : Result.Result String Decode_json.Point
 ```
 
 ### Auto generate code for decode/incode
-> *더 쉽게 해보자!* [json_to_elm](https://github.com/eeue56/json-to-elm)에서 제공하는 웹페이지에서 Json 스트링을 넣어주면 자동으로 incode/decode를 할 수 있는 elm code를 생성해 준다
+*더 쉽게 해보자!* [json_to_elm](https://github.com/eeue56/json-to-elm)에서 제공하는 웹페이지에서 Json 스트링을 넣어주면 자동으로 incode/decode를 할 수 있는 elm code를 생성해 준다
 1. http://noredink.github.io/json-to-elm/ 에서 코드를 생성후 프로젝트에 붙여 넣는다
 2. 생성된 코드에서 json-extra를 사용한다고 경고가 나온다
 3. elm-package.json > elm-community/json-extra": "2.1.0 <= v < 3.0.0" 추가 
