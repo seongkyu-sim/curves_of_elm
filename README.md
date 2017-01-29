@@ -39,11 +39,11 @@ todos
 3. 프로젝트 루트패스에 `Hello.eml`파일 생성
 4. 파일에 "Hello"메세지를 위한 코드 작성
 ```elm
-    module Hello exposing (..) -- (..) == all
-    import Html exposing (..) -- Html 렌더링용
+module Hello exposing (..) -- (..) == all
+import Html exposing (..) -- Html 렌더링용
 
-    main = 
-        text "Hello"
+main = 
+    text "Hello"
 ```
 5. 터미널에서 `elm-reactor` 실행
 
