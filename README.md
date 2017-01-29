@@ -1,7 +1,5 @@
 
-## Elm 
-`ver0.18`
-##### [elm](http://elm-lang.org) 학습 기록
+[elm](http://elm-lang.org) `ver0.18` 학습 기록
 
 ---
 
