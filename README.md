@@ -478,6 +478,7 @@ Ok { x = 23, y = 78 } : Result.Result String Decode_json.Point
 
 ### Auto generate code for decode/incode
 *더 쉽게 해보자!* [json_to_elm](https://github.com/eeue56/json-to-elm)에서 제공하는 웹페이지에서 Json 스트링을 넣어주면 자동으로 incode/decode를 할 수 있는 elm code를 생성해 준다
+
 1. http://noredink.github.io/json-to-elm/ 에서 코드를 생성후 프로젝트에 붙여 넣는다
 2. 생성된 코드에서 json-extra를 사용한다고 경고가 나온다
 3. `elm-community/json-extrat` 설치
