@@ -321,10 +321,10 @@ view userInputAge =
 ```
 
 
-Interop
+Interop > Json
 ---
 
-### Json
+### Decoder
 
 ```Elm 
 
@@ -535,3 +535,143 @@ Ok { id = 1, email = "1@colavo.kr", name = "Frank" }
 ```
 
 
+Interop > Javascript
+---
+
+### Inveding
+Spelling.elm -> Spelling.js 로 컴파일 후 Html에 임베딩한후 다른 자바스크립트 코드와 통신하도록 하는 구조
+> 아래 예제는 유저가 텍스트 필드에 입력했을때 스펠링을 `체크(Javascript code)`해서 후보 단어들을 텍스트 필드 아래에 보여주는 앱.
+
+- index.html
+```Html 
+<div id="spelling"></div>
+<script src="spelling.js"></script>
+<script>
+    var app = Elm.Spelling.fullscreen();
+
+    app.ports.check.subscribe(function(word) {
+        var suggestions = spellCheck(word);
+        app.ports.suggestions.send(suggestions);
+    });
+
+    function spellCheck(word) {
+        // dummy implementation
+        if (word == "helo") {
+            return ["hello"]
+        }else if (word == "hell") {
+            return ["hello", "hell"]
+        }
+
+        return [];
+    }
+</script>
+```
+
+- Spelling.elm
+```Elm 
+port module Spelling exposing (..)
+
+import Html exposing (..)
+import Html.Events exposing (..)
+import String
+
+
+
+main : Program Never Model Msg
+main =
+  Html.program
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
+
+
+-- MODEL
+
+type alias Model =
+  { word : String
+  , suggestions : List String
+  }
+
+init : (Model, Cmd Msg)
+init =
+  (Model "" [], Cmd.none)
+
+
+-- UPDATE
+
+type Msg
+  = Change String
+  | Check
+  | Suggest (List String)
+
+
+port check : String -> Cmd msg
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  case msg of
+    Change newWord ->
+      ( Model newWord [], Cmd.none )
+
+    Check ->
+      ( model, check model.word )
+
+    Suggest newSuggestions ->
+      ( Model model.word newSuggestions, Cmd.none )
+
+
+-- SUBSCRIPTIONS
+
+port suggestions : (List String -> msg) -> Sub msg
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  suggestions Suggest
+
+
+-- VIEW
+
+view : Model -> Html Msg
+view model =
+  div []
+    [ input [ onInput Change ] []
+    , button [ onClick Check ] [ text "Check" ]
+    , div [] [ text (String.join ", " model.suggestions) ]
+    ]
+```
+- compile Spelling.elm file
+```
+elm-make Spelling.elm --output=spelling.js
+```  
+
+
+### Flag
+elm앱이 시작(init)할때 특정값(ex. user)을 받고 싶을때 사용함. elm앱 생성시 program 대신 programWithFlags 사용
+
+```Elm 
+type alias Flags =
+  { user : String
+  , token : String
+  }
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+  ...
+
+main =
+  programWithFlags { init = init, ... }
+```
+```Javascript
+var app = Elm.MyApp.fullscreen({
+    user: 'Tom',
+    token: '12345'
+});
+
+var node = document.getElementById('my-app');
+var app = Elm.MyApp.embed(node, {
+    user: 'Tom',
+    token: '12345'
+});
+```
