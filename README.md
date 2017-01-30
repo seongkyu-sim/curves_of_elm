@@ -449,6 +449,11 @@ Ok { id = 1, name = "Frank" } : Result.Result String Decode_json.Person
 2개가 아닌 더 많은 갯수의 디코더를 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)로 합성해 보자
 
 먼저 [NoRedInk/elm-decode-pipeline](http://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest)를 설치해줘야 한다.
+1. ~~elm-package.json > `dependencies`에 `"NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0"` 추가~~
+2. ~~`elm-stuff` 폴더 삭제~~
+2. ~~terminal에서 `elm-make`~~
+
+> 위는 `elm-package installer`를 사용하지않고 수동으로 한것 아래처럼 터미널에서 자동으로 설치하자
 ```
 $ elm-package install NoRedInk/elm-decode-pipeline
 ```
@@ -480,7 +485,7 @@ Ok { x = 23, y = 78 } : Result.Result String Decode_json.Point
 *더 쉽게 해보자!* [json_to_elm](https://github.com/eeue56/json-to-elm)에서 제공하는 웹페이지에서 Json 스트링을 넣어주면 자동으로 incode/decode를 할 수 있는 elm code를 생성해 준다
 1. http://noredink.github.io/json-to-elm/ 에서 코드를 생성후 프로젝트에 붙여 넣는다
 2. 생성된 코드에서 json-extra를 사용한다고 경고가 나온다
-3. `elm-community/json-extrat` 설치
+3. ~~elm-package.json > elm-community/json-extra": "2.1.0 <= v < 3.0.0" 추가~~ 
 ```
 $ elm-package install elm-community/json-extra
 ```
