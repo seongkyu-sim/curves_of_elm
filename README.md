@@ -22,7 +22,7 @@ todos
 
 - [x] 개념잡기
 - [ ] [튜토리얼](https://www.elm-tutorial.org/en/) 
-- [ ] [가이드](https://guide.elm-lang.org)
+- [x] [가이드](https://guide.elm-lang.org)
 - [ ] Elm + Firebase 테스트
 
 
