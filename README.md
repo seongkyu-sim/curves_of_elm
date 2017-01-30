@@ -481,7 +481,6 @@ Ok { x = 23, y = 78 } : Result.Result String Decode_json.Point
 1. http://noredink.github.io/json-to-elm/ 에서 코드를 생성후 프로젝트에 붙여 넣는다
 2. 생성된 코드에서 json-extra를 사용한다고 경고가 나온다
 3. `elm-community/json-extrat` 설치
-
 ```
 $ elm-package install elm-community/json-extra
 ```
